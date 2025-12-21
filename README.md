@@ -1,2 +1,15 @@
-# hanami-data-analyzer-api
-API que processa arquivos CSV/XLSX e gera relatórios analíticos. Desenvolvida para o Projeto Hanami Backend - API de Análise de Dados 
+# HanamiTemp
+
+🌸 Welcome to your Hanami app!
+
+## Getting started
+
+- Set up the project with `bin/setup`
+- Run the server with `bin/dev`
+- View the app at [http://localhost:2300](http://localhost:2300)
+- Run the tests with `bundle exec rake`
+
+## Useful links
+
+- [Hanami](http://hanamirb.org)
+- [Hanami guides](https://guides.hanamirb.org/)
