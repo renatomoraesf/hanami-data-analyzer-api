@@ -3,12 +3,13 @@ require "hanami"
 module DataAnalyzerApi
   class App < Hanami::App
     config.actions.format :json
-    
-    config.middleware.use :body_parser, :json
+    config.logger.level = :info
     
     environment :development do
-      config.logger.stream = File.new("log/development.log", "a+")
-      config.logger.level = :debug
+      config.logger.stream = $stdout
     end
   end
 end
+
+# PREPARAR É OBRIGATÓRIO
+DataAnalyzerApi::App.prepare
