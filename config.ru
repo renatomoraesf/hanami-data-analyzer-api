@@ -1,2 +1,9 @@
-require_relative "config/app"
-run DataAnalyzerApi::App
+# config.ru mínima
+require "hanami"
+
+module DataAnalyzerApi
+  class App < Hanami::App
+  end
+end
+
+run DataAnalyzerApi::App.new

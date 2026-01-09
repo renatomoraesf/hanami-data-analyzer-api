@@ -40,3 +40,5 @@ group :test do
   gem "capybara"
   gem "rack-test"
 end
+gem 'roo', '~> 2.10'
+gem 'roo-xls', '~> 1.2'

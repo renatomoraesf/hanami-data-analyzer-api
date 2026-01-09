@@ -1,15 +1,18 @@
 require "hanami"
-
 module DataAnalyzerApi
   class App < Hanami::App
-    config.actions.format :json
-    config.logger.level = :info
-    
-    environment :development do
-      config.logger.stream = $stdout
-    end
   end
 end
 
-# PREPARAR É OBRIGATÓRIO
-DataAnalyzerApi::App.prepare
+    # Configuração de logging
+    config.logger = Hanami::Logger.new(
+      "data_analyzer_api",
+      level: :debug,
+      stream: $stdout,
+      formatter: :json
+    )
+    
+    config.logger_options = {
+      colorize: Hanami.env == :development,
+      filters: ["password", "secret", "token"]
+    }

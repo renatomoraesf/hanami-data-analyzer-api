@@ -1,3 +1,0 @@
-id_transacao,data_venda,valor_final,subtotal,desconto_percent,canal_venda,forma_pagamento,regiao,status_entrega,tempo_entrega_dias,vendedor_id,cliente_id,produto_id
-TXN00000001,2023-01-15,1500.00,1500.00,0,Online,Cartão Crédito,Sudeste,Entregue,3,VEN001,CLI000001,PRD001
-TXN00000002,2023-01-16,2800.00,3000.00,6.67,Loja Física,PIX,Sul,Em Trânsito,5,VEN002,CLI000002,PRD002

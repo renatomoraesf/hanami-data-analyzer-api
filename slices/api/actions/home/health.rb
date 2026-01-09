@@ -3,7 +3,10 @@ module Api
     module Home
       class Health < Api::Action
         def handle(request, response)
-          response.body = { status: "ok" }.to_json
+          response.body = { 
+            status: "healthy",
+            timestamp: Time.now.iso8601
+          }.to_json
         end
       end
     end

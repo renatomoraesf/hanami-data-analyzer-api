@@ -1,7 +1,0 @@
-require "dry/types"
-
-module DataAnalyzerApi
-  class Settings < Hanami::Settings
-    setting :database_url
-  end
-end

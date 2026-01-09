@@ -1,9 +1,7 @@
+# slices/api/config/routes.rb
 module Api
   class Routes < Hanami::Routes
-    define do
-      root to: "home.show"
-      post "/upload", to: "uploads.create"
-      get "/health", to: "home.health"
-    end
+    # Rotas específicas do slice API
+    # (se houver, mas no nosso caso as rotas principais estão em config/routes.rb)
   end
 end
