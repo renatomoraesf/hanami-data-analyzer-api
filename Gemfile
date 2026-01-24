@@ -1,44 +1,33 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
-gem "hanami", "~> 2.3.0"
-gem "hanami-assets", "~> 2.3.0"
-gem "hanami-controller", "~> 2.3.0"
-gem "hanami-db", "~> 2.3.0"
-gem "hanami-router", "~> 2.3.0"
-gem "hanami-validations", "~> 2.3.0"
-gem "hanami-view", "~> 2.3.0"
+# Hanami
+gem "hanami", "~> 2.3"
+gem "hanami-controller", "~> 2.3"
+gem "hanami-router", "~> 2.3"
+gem "hanami-validations", "~> 2.3"
+gem "hanami-view", "~> 2.3"
 
-gem "dry-types", "~> 1.7"
-gem "dry-operation", ">= 1.0.1"
-gem "puma"
-gem "rake"
-gem "pg"
+# Database
+gem "hanami-db", "~> 2.3"
+gem "sqlite3", "~> 1.6"
 
+# Server
+gem "puma", "~> 7.1"
+gem "rack", "~> 3.2"
+
+# Development
 group :development do
-  gem "hanami-webconsole", "~> 2.3.0"
+  gem "hanami-webconsole", "~> 2.3"
+  gem "hanami-reloader", "~> 2.3"
 end
 
-group :development, :test do
-  gem "dotenv"
-end
-
-group :cli, :development do
-  gem "hanami-reloader", "~> 2.3.0"
-end
-
-group :cli, :development, :test do
-  gem "hanami-rspec", "~> 2.3.0"
-end
-
+# Test
 group :test do
-  # Database
-  gem "database_cleaner-sequel"
-
-  # Web integration
-  gem "capybara"
-  gem "rack-test"
+  gem "hanami-rspec", "~> 2.3"
+  gem "rack-test", "~> 2.0"
 end
-gem 'roo', '~> 2.10'
-gem 'roo-xls', '~> 1.2'
+
+# Optional (commented out)
+# gem "guard-puma", "~> 0.9"
+# gem "guard-rspec", "~> 4.7"
+# gem "guard-rake", "~> 1.0"
