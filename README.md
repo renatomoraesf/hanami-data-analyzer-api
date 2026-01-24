@@ -12,7 +12,8 @@ API para análise de dados de vendas em CSV/XLSX com Hanami 2.3.
 - **GET /reports/financial-metrics** - Métricas financeiras
 - Integração com banco de dados
 
-### Sprint 2 (Planejada)
+### Sprint 2 (Concluída)
+**✅ Implementado:**
 - **GET /reports/regional-performance** - Performance por região geográfica
 - **GET /reports/customer-profile** - Perfil demográfico dos clientes
 - Módulo `DemographicCalculator` - Análise demográfica
@@ -86,7 +87,7 @@ GET / → Status da API
 GET /health → Health check do sistema
 ```
 
-#### Upload de Arquivos (Sprint 1)
+#### Upload de Arquivos
 ```bash
 POST /upload
 Content-Type: multipart/form-data
@@ -101,7 +102,7 @@ Resposta (sucesso):
   "valid_rows": 1450
 }
 ```
-###  Relatórios de Vendas (Sprint 1)
+###  Relatórios de Vendas
 ```bash
 GET /reports/sales-summary
 GET /reports/sales-summary?start_date=2024-01-01&end_date=2024-01-31
@@ -141,7 +142,7 @@ Resposta:
 }
 ```
 
-### Análise Regional (Sprint 2)
+### Análise Regional
 
 ```bash
 GET /reports/regional-performance
@@ -158,7 +159,7 @@ Resposta:
 }
 ```
 
-### Perfil de Clientes (Sprint 2)
+### Perfil de Clientes
 
 ```bash
 GET /reports/customer-profile
