@@ -1,4 +1,3 @@
-# slices/api/actions/reports/regional_performance.rb
 module Api
   module Actions
     module Reports
@@ -14,7 +13,7 @@ module Api
             end_date: end_date
           )
           
-          # Formatar resposta
+
           formatted_data = data.map do |region|
             {
               region: region.region,

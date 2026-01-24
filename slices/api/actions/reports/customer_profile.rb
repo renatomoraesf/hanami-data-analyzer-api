@@ -14,7 +14,6 @@ module Api
             end_date: end_date
           )
           
-          # Formatar dados demográficos
           demographics = profile_data[:demographics].map do |demo|
             {
               gender: demo.customer_gender,
@@ -26,7 +25,6 @@ module Api
             }
           end
           
-          # Formatar cidades
           top_cities = profile_data[:top_cities].map do |city|
             {
               city: city.customer_city,
@@ -38,7 +36,6 @@ module Api
             }
           end
           
-          # Formatar faixas etárias
           age_distribution = profile_data[:age_distribution].map do |age|
             {
               age_bracket: age.age_bracket,
@@ -48,7 +45,6 @@ module Api
             }
           end
           
-          # Calcular totais para insights
           total_customers = profile_data[:total_unique_customers] || 0
           total_sales = demographics.sum { |d| d[:total_spent] }
           
@@ -103,7 +99,7 @@ module Api
           insights = []
           
           if demographics.any?
-            # Insight sobre gênero
+
             gender_data = demographics.group_by { |d| d[:gender] }
             if gender_data['M'] && gender_data['F']
               male_count = gender_data['M'].sum { |d| d[:customer_count] }
@@ -117,7 +113,6 @@ module Api
               end
             end
             
-            # Insight sobre gasto médio
             if demographics.any?
               highest_spending = demographics.max_by { |d| d[:avg_spent_per_customer] }
               insights << "Highest average spend: #{highest_spending[:gender]} customers at #{highest_spending[:avg_spent_per_customer]} per customer"
