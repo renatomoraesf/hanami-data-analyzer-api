@@ -10,20 +10,20 @@ module Api
           end_date = parse_date(request.params[:end_date])
           limit = (request.params[:limit] || 20).to_i
           
-          # Análise de produtos
+
           products = sales_repo.product_analysis(
             start_date: start_date,
             end_date: end_date,
             limit: limit
           )
           
-          # Análise por categoria
+
           categories = sales_repo.category_analysis(
             start_date: start_date,
             end_date: end_date
           )
           
-          # Calcular totais
+
           total_sales = products.sum { |p| p.total_sales.to_f }
           total_units = products.sum { |p| p.total_units.to_i }
           

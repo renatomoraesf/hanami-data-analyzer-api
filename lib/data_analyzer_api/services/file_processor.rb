@@ -24,7 +24,7 @@ module DataAnalyzerApi
       def call
         validate_file
         data = parse_file
-        @results[:data] = data.first(10) # Amostra
+        @results[:data] = data.first(10)
         @results[:valid_rows] = data.size
         @results[:processed] = true
         @results
@@ -67,10 +67,10 @@ module DataAnalyzerApi
           row_count += 1
           @results[:rows] = row_count
           
-          # Pular linhas vazias
+
           next if row.to_h.values.compact.empty?
           
-          # Converter e validar
+
           sale_data = convert_row(row.to_h)
           
           if valid_sale?(sale_data)
@@ -79,7 +79,7 @@ module DataAnalyzerApi
             @results[:errors] << "Linha #{row_count} inválida"
           end
           
-          break if row_count >= 10000 # Limite de segurança
+          break if row_count >= 10000
         end
         
         parsed_data
@@ -91,10 +91,10 @@ module DataAnalyzerApi
         spreadsheet = Roo::Spreadsheet.open(@file_path)
         sheet = spreadsheet.sheet(0)
         
-        # Obter cabeçalhos
+
         headers = sheet.row(1).map { |h| h.to_s.strip.downcase.gsub(' ', '_') }
         
-        # Validar cabeçalhos mínimos
+
         required_headers = ['id_transacao', 'data_venda', 'valor_final', 'cliente_id', 'produto_id']
         missing_headers = required_headers - headers
         
@@ -102,7 +102,7 @@ module DataAnalyzerApi
           raise ProcessingError, "Cabeçalhos obrigatórios faltando: #{missing_headers.join(', ')}"
         end
         
-        # Processar linhas
+
         (2..sheet.last_row).each do |row_num|
           @results[:rows] += 1
           row_data = {}
@@ -112,10 +112,10 @@ module DataAnalyzerApi
             row_data[header] = value
           end
           
-          # Pular linhas vazias
+
           next if row_data.values.compact.empty?
           
-          # Converter e validar
+
           sale_data = convert_row(row_data)
           
           if valid_sale?(sale_data)
@@ -124,14 +124,14 @@ module DataAnalyzerApi
             @results[:errors] << "Linha #{row_num} inválida"
           end
           
-          break if row_num >= 10002 # Limite de segurança
+          break if row_num >= 10002
         end
         
         parsed_data
       end
       
       def convert_row(row_hash)
-        # Padronizar chaves
+
         standardized_row = {}
         row_hash.each do |key, value|
           standardized_key = key.to_s.strip.downcase.gsub(' ', '_')
@@ -168,7 +168,7 @@ module DataAnalyzerApi
       end
       
       def valid_sale?(sale_data)
-        # Validações básicas
+
         return false if sale_data[:transaction_id].to_s.empty?
         return false if sale_data[:sale_date].nil?
         return false if sale_data[:final_value].to_f <= 0
@@ -180,11 +180,11 @@ module DataAnalyzerApi
       def parse_date(date_str)
         return nil if date_str.to_s.empty?
         
-        # Tentar vários formatos
+
         begin
           Date.parse(date_str.to_s)
         rescue
-          # Tentar formato brasileiro
+
           begin
             Date.strptime(date_str.to_s, "%d/%m/%Y")
           rescue
@@ -196,7 +196,7 @@ module DataAnalyzerApi
       def parse_decimal(value)
         return 0.0 if value.to_s.empty?
         
-        # Converter vírgula para ponto e remover símbolos de moeda
+
         cleaned = value.to_s.gsub(/[R\$\s]/, '').gsub(',', '.')
         cleaned.to_f
       end

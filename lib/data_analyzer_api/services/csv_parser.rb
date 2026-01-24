@@ -22,7 +22,7 @@ module DataAnalyzerApi
       private
       
       def process_row(row)
-        # Dados da venda
+
         sale_data = {
           id_transacao: safe_strip(row['id_transacao']),
           data_venda: parse_date(row['data_venda']),
@@ -41,7 +41,7 @@ module DataAnalyzerApi
           updated_at: Time.now
         }
         
-        # Dados do cliente (se disponíveis no CSV)
+
         customer_data = if row['nome_cliente'] || row['idade_cliente']
           {
             cliente_id: safe_strip(row['cliente_id']),
@@ -56,7 +56,7 @@ module DataAnalyzerApi
           }
         end
         
-        # Dados do produto (se disponíveis no CSV)
+
         product_data = if row['nome_produto'] || row['categoria']
           {
             produto_id: safe_strip(row['produto_id']),

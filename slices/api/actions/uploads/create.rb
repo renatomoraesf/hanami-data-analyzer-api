@@ -16,7 +16,7 @@ module Api
         def handle(request, response)
           logger.info("Upload endpoint accessed")
           
-          # Verificar se há arquivo no request
+
           file_param = request.params[:file]
           
           if file_param.nil? || !file_param.respond_to?(:[])
@@ -24,7 +24,7 @@ module Api
             return error_response("Nenhum arquivo enviado. Envie um arquivo CSV/XLSX usando o campo 'file' (form-data)", 400)
           end
           
-          # Salvar arquivo temporariamente
+
           tempfile = file_param[:tempfile]
           filename = file_param[:filename]
           
@@ -35,19 +35,19 @@ module Api
           
           logger.info("File upload started: #{filename}, size: #{tempfile.size} bytes")
           
-          # Registrar processamento
+
           processing = file_processing_repo.create_processing(filename, status: 'processing')
           file_logger.info("Processing started: ID #{processing.id}, filename: #{filename}")
           
-          # Criar diretório temporário
+
           temp_dir = File.join(Dir.pwd, "tmp", "uploads")
           FileUtils.mkdir_p(temp_dir)
           
-          # Salvar arquivo
+
           temp_path = File.join(temp_dir, "#{Time.now.to_i}_#{filename}")
           File.open(temp_path, "wb") { |f| f.write(tempfile.read) }
           
-          # Processar arquivo
+
           processor = DataAnalyzerApi::Services::FileProcessor.new(
             file_path: temp_path,
             filename: filename
@@ -55,15 +55,15 @@ module Api
           
           result = processor.call
           
-          # Limpar arquivo temporário
+
           File.delete(temp_path) if File.exist?(temp_path)
           
-          # Atualizar status do processamento
+
           if result[:processed]
             logger.info("File processed successfully: #{filename}, rows: #{result[:rows]}, valid: #{result[:valid_rows]}")
             file_logger.info("Processing completed: ID #{processing.id}, valid rows: #{result[:valid_rows]}")
             
-            # Salvar no banco se houver dados válidos
+
             if result[:valid_rows] > 0 && sales_repo
               begin
                 saved = sales_repo.create_many(result[:data])
@@ -120,7 +120,7 @@ module Api
           logger.error(e.backtrace.first(5).join("\n"))
           file_logger.error("Critical error in upload: #{e.message}")
           
-          # Em caso de erro, atualizar status
+
           if defined?(processing) && processing
             file_processing_repo.update_processing(
               processing.id,

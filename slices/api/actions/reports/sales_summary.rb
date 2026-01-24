@@ -6,16 +6,16 @@ module Api
         include Deps["persistence.repositories.sales_repo"]
         
         def handle(request, response)
-          # Extrair parâmetros de data (opcional)
+
           start_date = parse_date(request.params[:start_date])
           end_date = parse_date(request.params[:end_date])
           
-          # Obter dados do banco
+
           summary = sales_repo.sales_summary(start_date: start_date, end_date: end_date) || {}
           by_channel = sales_repo.sales_by_channel(start_date: start_date, end_date: end_date)
           by_region = sales_repo.sales_by_region(start_date: start_date, end_date: end_date)
           
-          # Calcular métricas adicionais
+
           total_discount = (summary[:total_subtotal].to_f - summary[:total_sales].to_f).round(2)
           discount_percentage = summary[:total_subtotal].to_f > 0 ? 
             ((total_discount / summary[:total_subtotal].to_f) * 100).round(2) : 0
@@ -43,7 +43,7 @@ module Api
             }
           }
           
-          # Se não houver dados, usar mock
+
           if summary[:total_transactions].to_i == 0
             response_data[:note] = "Sem dados no banco. Usando dados de demonstração."
             response_data[:summary] = {

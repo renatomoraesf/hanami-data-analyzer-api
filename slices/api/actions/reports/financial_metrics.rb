@@ -14,14 +14,14 @@ module Api
             end_date: end_date
           )
           
-          # Extrair dados
+
           base = metrics[:base_metrics] || {}
           by_channel = metrics[:by_channel] || []
           by_payment = metrics[:by_payment_method] || []
           discount = metrics[:discount_analysis] || {}
           profit = metrics[:profit_analysis] || {}
           
-          # Calcular métricas derivadas
+
           total_sales = base[:total_sales].to_f
           total_transactions = base[:total_transactions].to_i
           total_discount = discount[:total_discount_value].to_f
@@ -31,7 +31,7 @@ module Api
           discount_rate = total_subtotal > 0 ? (total_discount / total_subtotal * 100).round(2) : 0
           profit_margin = total_sales > 0 ? (profit[:estimated_total_profit].to_f / total_sales * 100).round(2) : 0
           
-          # Formatar canais
+
           formatted_channels = by_channel.map do |channel|
             {
               channel: channel.sales_channel,
@@ -42,7 +42,7 @@ module Api
             }
           end
           
-          # Formatar métodos de pagamento
+
           formatted_payments = by_payment.map do |payment|
             {
               method: payment.payment_method,
@@ -85,7 +85,7 @@ module Api
               highest_value_method: formatted_payments.max_by { |p| p[:avg_transaction_value] }&.dig(:method) || "N/A"
             },
             financial_health_indicators: {
-              conversion_rate: "N/A", # Seria calculado se tivéssemos dados de visitantes
+              conversion_rate: "N/A",
               customer_acquisition_cost: "N/A",
               customer_lifetime_value: "N/A",
               return_on_ad_spend: "N/A"
@@ -125,19 +125,19 @@ module Api
         def generate_financial_recommendations(sales, discount_rate, profit_margin, channels, payments)
           recommendations = []
           
-          # Recomendações baseadas em desconto
+
           if discount_rate > 15
             recommendations << "Consider reducing overall discount rate (currently #{discount_rate}%) to improve margins"
           elsif discount_rate < 5
             recommendations << "Consider strategic discounts to boost sales volume"
           end
           
-          # Recomendações baseadas em margem de lucro
+
           if profit_margin < 20
             recommendations << "Profit margin (#{profit_margin}%) is below optimal. Review pricing or costs"
           end
           
-          # Recomendações baseadas em canais
+
           if channels.any?
             top_channel = channels.max_by { |c| c[:total_sales] }
             worst_channel = channels.min_by { |c| c[:total_sales] }
@@ -148,7 +148,7 @@ module Api
             end
           end
           
-          # Recomendações baseadas em métodos de pagamento
+
           if payments.any?
             high_value_method = payments.max_by { |p| p[:avg_transaction_value] }
             if high_value_method && high_value_method[:avg_transaction_value] > (sales / 100) # 1% do total

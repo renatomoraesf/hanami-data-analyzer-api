@@ -5,7 +5,7 @@ Hanami.app.register_provider :persistence, namespace: true do
 
     config = ROM::Configuration.new(:sql, target["settings"].database_url)
 
-    # Registrar relações
+
     config.auto_registration(
       target.root.join("lib/data_analyzer_api/persistence"),
       namespace: "DataAnalyzerApi::Persistence"
@@ -18,7 +18,7 @@ Hanami.app.register_provider :persistence, namespace: true do
   start do
     rom = target["persistence.rom"]
 
-    # Carregar migrations
+ 
     rom.gateways[:default].use_logger(target["logger"]) if Hanami.env == :development
 
     register "rom", rom

@@ -51,13 +51,13 @@ module DataAnalyzerApi
         CSV.foreach(@file_path, headers: true, encoding: 'UTF-8') do |row|
           row_count += 1
           
-          # Validar linha básica
+
           if row.to_h.values.compact.empty?
             @results[:errors] << "Linha #{row_count} vazia"
             next
           end
           
-          # Converter dados
+
           sale_data = convert_row(row)
           
           if valid_sale?(sale_data)
@@ -69,11 +69,11 @@ module DataAnalyzerApi
           
           @results[:rows] = row_count
           
-          # Limitar para demonstração
+
           break if row_count >= 1000
         end
         
-        @results[:data] = parsed_data.first(10) # Guardar amostra
+        @results[:data] = parsed_data.first(10)
         parsed_data
       end
       
@@ -108,7 +108,7 @@ module DataAnalyzerApi
       end
       
       def valid_sale?(sale_data)
-        # Validações básicas
+
         return false if sale_data[:transaction_id].to_s.empty?
         return false if sale_data[:sale_date].nil?
         return false if sale_data[:final_value].to_f <= 0

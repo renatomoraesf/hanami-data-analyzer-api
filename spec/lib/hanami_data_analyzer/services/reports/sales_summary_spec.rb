@@ -47,7 +47,7 @@ RSpec.describe HanamiDataAnalyzer::Services::Reports::SalesSummary do
         service = described_class.new(data: sample_data)
         result = service.call
         
-        expect(result[:summary][:total_sales]).to eq(451.25) # 100.50 + 200.00 + 150.75
+        expect(result[:summary][:total_sales]).to eq(451.25)
         expect(result[:summary][:total_transactions]).to eq(3)
         expect(result[:summary][:average_sale]).to eq(150.42)
       end

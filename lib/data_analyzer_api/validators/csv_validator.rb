@@ -18,19 +18,19 @@ module DataAnalyzerApi
         
         errors = []
         
-        # Validar vendas
+
         data[:sales].each_with_index do |sale, index|
-          sale_errors = validate_sale(sale, index + 2) # +2 for header row
+          sale_errors = validate_sale(sale, index + 2)
           errors.concat(sale_errors) if sale_errors.any?
         end
         
-        # Validar clientes
+
         data[:customers].each_with_index do |customer, index|
           customer_errors = validate_customer(customer, index + 2)
           errors.concat(customer_errors) if customer_errors.any?
         end
         
-        # Validar produtos
+
         data[:products].each_with_index do |product, index|
           product_errors = validate_product(product, index + 2)
           errors.concat(product_errors) if product_errors.any?
@@ -44,14 +44,14 @@ module DataAnalyzerApi
       def validate_sale(sale, line_number)
         errors = []
         
-        # Campos obrigatórios
+
         REQUIRED_SALE_COLUMNS.each do |column|
           if sale[column.to_sym].nil? || sale[column.to_sym].to_s.empty?
             errors << "Linha #{line_number}: Campo '#{column}' é obrigatório"
           end
         end
         
-        # Validações específicas
+
         if sale[:desconto_percent] && (sale[:desconto_percent] < 0 || sale[:desconto_percent] > 100)
           errors << "Linha #{line_number}: desconto_percent deve estar entre 0 e 100"
         end
@@ -64,7 +64,7 @@ module DataAnalyzerApi
           errors << "Linha #{line_number}: tempo_entrega_dias deve estar entre 1 e 15"
         end
         
-        # Validações de domínio
+
         if sale[:canal_venda] && !CHANNELS.include?(sale[:canal_venda])
           errors << "Linha #{line_number}: canal_venda inválido. Valores permitidos: #{CHANNELS.join(', ')}"
         end

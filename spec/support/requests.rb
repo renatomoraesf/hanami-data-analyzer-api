@@ -3,7 +3,7 @@
 require "rack/test"
 
 RSpec.shared_context "with Rack::Test" do
-  # Define the app for Rack::Test requests
+
   let(:app) { Hanami.app }
 end
 
