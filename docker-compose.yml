@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "2300:2300"
+    volumes:
+      - ./app:/app/app
+      - ./config:/app/config
+      - ./lib:/app/lib
+      - ./slices:/app/slices
+      - ./data:/app/data
+      - ./public:/app/public
+      - log_data:/app/log
+      - db_data:/app/db
+      - tmp_data:/app/tmp
+    environment:
+      - HANAMI_ENV=development
+      - DATABASE_URL=sqlite://db/data_analyzer_development.sqlite
+    command: bundle exec hanami server --host 0.0.0.0
+
+volumes:
+  log_data:
+  db_data:
+  tmp_data:
