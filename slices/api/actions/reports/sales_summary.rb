@@ -1,5 +1,5 @@
 # slices/api/actions/reports/sales_summary.rb
-module Api
+module API
   module Actions
     module Reports
       class SalesSummary < Api::Action

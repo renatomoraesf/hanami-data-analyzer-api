@@ -1,7 +1,7 @@
-# slices/api/action.rb
+# app/action.rb
 require "hanami/action"
 
-module API
+module DataAnalyzerApi
   class Action < Hanami::Action
   end
 end

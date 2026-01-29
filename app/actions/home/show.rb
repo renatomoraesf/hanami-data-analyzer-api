@@ -1,19 +1,18 @@
-# slices/api/actions/home/health.rb
+# app/actions/home/show.rb
 require "hanami/action"
 
-module Api
+module DataAnalyzerApi
   module Actions
     module Home
-      class Health < Hanami::Action
+      class Show < Hanami::Action
         def handle(request, response)
           response.status = 200
           response.headers["Content-Type"] = "application/json"
-          response.body = { 
-            status: "ok",
+          response.body = {
             app: "Hanami Data Analyzer API",
             version: "1.0.0",
+            status: "running",
             endpoints: {
-              status: "GET /",
               upload: "POST /api/uploads",
               download: "GET /api/reports/download?format=json|pdf",
               documentation: "/openapi.json"

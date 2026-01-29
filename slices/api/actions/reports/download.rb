@@ -1,47 +1,42 @@
-module Api
+# slices/api/actions/reports/download.rb
+require "hanami/action"
+require "dry/auto_inject"
+
+module API
   module Actions
     module Reports
-      class Download < Api::Action
-        include Deps[
-          "persistence.repositories.sales_repo",
-          "services.json_exporter",
-          "services.pdf_exporter"
+      class Download < Hanami::Action
+        include Dry::AutoInject(Hanami.app)[
+          "data_analyzer_api.services.report_generator",
+          "data_analyzer_api.services.pdf_exporter"
         ]
-        
+
         params do
-          required(:format).filled(:string, included_in?: ["json", "pdf"])
+          required(:format).filled(:string, included_in?: %w[json pdf])
         end
 
         def handle(request, response)
-          validation = validate_params(request.params)
-          return error_response(response, validation.errors) if validation.failure?
+          unless request.params.valid?
+            response.status = 400
+            response.body = { error: "Formato inválido. Use 'json' ou 'pdf'" }.to_json
+            response.headers["Content-Type"] = "application/json"
+            return
+          end
+
+
+          report_data = report_generator.generate_all_reports
 
           case request.params[:format]
           when "json"
-            export_json(response)
+            response.headers["Content-Type"] = "application/json"
+            response.headers["Content-Disposition"] = "attachment; filename=report.json"
+            response.body = report_data.to_json
           when "pdf"
-            export_pdf(response)
+            response.headers["Content-Type"] = "application/pdf"
+            response.headers["Content-Disposition"] = "attachment; filename=report.pdf"
+            response.body = pdf_exporter.call(report_data)
           end
         end
-
-        private
-
-        def export_json(response)
-          data = json_exporter.export_full_report
-          
-          response.headers["Content-Type"] = "application/json"
-          response.headers["Content-Disposition"] = "attachment; filename=report_#{Time.now.to_i}.json"
-          response.body = JSON.pretty_generate(data)
-        end
-
-        def export_pdf(response)
-          pdf_data = pdf_exporter.generate_report
-          
-          response.headers["Content-Type"] = "application/pdf"
-          response.headers["Content-Disposition"] = "attachment; filename=report_#{Time.now.to_i}.pdf"
-          response.body = pdf_data
-        end
-        
       end
     end
   end

@@ -1,5 +1,5 @@
 # slices/api/actions/reports/customer_profile.rb
-module Api
+module API
   module Actions
     module Reports
       class CustomerProfile < Api::Action

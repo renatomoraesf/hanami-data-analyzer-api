@@ -1,5 +1,5 @@
 # slices/api/actions/reports/financial_metrics.rb
-module Api
+module API
   module Actions
     module Reports
       class FinancialMetrics < Api::Action

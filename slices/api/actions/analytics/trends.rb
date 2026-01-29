@@ -1,5 +1,5 @@
 # slices/api/actions/analytics/trends.rb
-module Api
+module API
   module Actions
     module Analytics
       class Trends < Api::Action

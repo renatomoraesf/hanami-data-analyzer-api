@@ -1,24 +1,22 @@
+# slices/api/actions/home/show.rb
+require "hanami/action"
+
 module Api
   module Actions
     module Home
-      class Show < Api::Action
+      class Show < Hanami::Action
         def handle(request, response)
-          response.format = :json
+          response.status = 200
+          response.headers["Content-Type"] = "application/json"
           response.body = {
-            api: "Hanami Data Analyzer API",
-            version: "1.0",
-            status: "online",
-            endpoints: [
-              "POST /upload",
-              "GET /reports/sales-summary",
-              "GET /reports/regional-performance",
-              "GET /reports/product-analysis",
-              "GET /reports/customer-profile",
-              "GET /reports/financial-metrics",
-              "GET /analytics/trends",
-              "GET /data/search"
-            ],
-            documentation: "Veja README.md para detalhes",
+            app: "Hanami Data Analyzer API",
+            version: "1.0.0",
+            status: "running",
+            endpoints: {
+              upload: "POST /api/uploads",
+              download: "GET /api/reports/download?format=json|pdf",
+              documentation: "/openapi.json"
+            },
             timestamp: Time.now.iso8601
           }.to_json
         end

@@ -1,5 +1,5 @@
 # slices/api/actions/reports/product_analysis.rb
-module Api
+module API
   module Actions
     module Reports
       class ProductAnalysis < Api::Action

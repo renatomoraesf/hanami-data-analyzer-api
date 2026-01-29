@@ -1,4 +1,4 @@
-module Api
+module API
   module Actions
     module Reports
       class RegionalPerformance < Api::Action
