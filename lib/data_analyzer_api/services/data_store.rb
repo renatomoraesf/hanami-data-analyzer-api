@@ -2,23 +2,19 @@ module DataAnalyzerApi
   module Services
     class DataStore
       def initialize
-        @store = {
-          sales: [],
-          customers: [],
-          products: []
-        }
+        @data = {}
       end
       
-      def add_sales(data)
-        @store[:sales] = data
+      def store(key, value)
+        @data[key] = value
       end
       
-      def all_sales
-        @store[:sales]
+      def retrieve(key)
+        @data[key]
       end
       
       def clear
-        @store.each { |key, _| @store[key] = [] }
+        @data.clear
       end
     end
   end

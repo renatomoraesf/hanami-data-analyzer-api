@@ -1,2 +1,4 @@
-require "hanami/boot"
-run Hanami.app
+# config.ru
+require_relative "config/boot"
+
+run DataAnalyzerApi::App

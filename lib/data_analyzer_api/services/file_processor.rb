@@ -144,12 +144,12 @@ module DataAnalyzerApi
           final_value: parse_decimal(standardized_row['valor_final']),
           subtotal: parse_decimal(standardized_row['subtotal']),
           discount_percent: standardized_row['desconto_percent']&.to_i || 0,
-          sales_channel: standardized_row['canal_venda']&.to_s&.strip&.downcase, # Padronizado para minúsculas
+          sales_channel: standardized_row['canal_venda']&.to_s&.strip&.downcase, 
           payment_method: standardized_row['forma_pagamento']&.to_s&.strip&.downcase,
           customer_id: standardized_row['cliente_id']&.to_s&.strip,
           customer_name: standardized_row['nome_cliente']&.to_s&.strip,
           customer_age: standardized_row['idade_cliente']&.to_i,
-          customer_gender: standardized_row['genero_cliente']&.to_s&.strip&.upcase, # Padronizado para maiúsculas
+          customer_gender: standardized_row['genero_cliente']&.to_s&.strip&.upcase, 
           customer_city: standardized_row['cidade_cliente']&.to_s&.strip,
           customer_state: standardized_row['estado_cliente']&.to_s&.strip,
           customer_income: parse_decimal(standardized_row['renda_estimada']),
